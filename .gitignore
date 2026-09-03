@@ -1,0 +1,24 @@
+# Secrets / local environment config
+.env
+!.env.example
+
+# Minecraft runtime & world data (persisted via Docker volume, never committed)
+/data/
+world/
+logs/
+*.log
+banned-*.json
+ops.json
+whitelist.json
+usercache.json
+eula.txt
+server.properties
+
+# Server binary (downloaded at build time)
+server.jar
+
+# OS / editor
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
