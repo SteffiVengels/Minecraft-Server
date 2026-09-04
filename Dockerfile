@@ -3,12 +3,12 @@
 FROM ubuntu:24.04
 
 # Install the Java runtime and the tools needed to resolve/download the server jar.
-# openjdk-21-jre-headless -> Java 21 (required by current Minecraft releases)
+# openjdk-25-jre-headless -> Java 25 (required by current Minecraft releases)
 # curl + jq              -> query Mojang's version manifest and download the jar
 # ca-certificates        -> HTTPS trust store
 RUN apt-get update \
     && apt-get install -y --no-install-recommends \
-    openjdk-21-jre-headless \
+    openjdk-25-jre-headless \
     curl \
     jq \
     ca-certificates \
