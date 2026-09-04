@@ -1,0 +1,35 @@
+services:
+  mc-server:
+    build:
+      context: .
+      args:
+        # Change to a fixed version (e.g. "1.21.4") for reproducible builds.
+        MINECRAFT_VERSION: "${MINECRAFT_VERSION:-latest}"
+    container_name: mc-server
+    # Uncritical config only. Values fall back to defaults if no .env is present,
+    # so the server always starts. Overrides come from a local (gitignored) .env.
+    environment:
+      MOTD: "${MOTD:-A Minecraft Server (Docker)}"
+      DIFFICULTY: "${DIFFICULTY:-easy}"
+      GAMEMODE: "${GAMEMODE:-survival}"
+      MAX_PLAYERS: "${MAX_PLAYERS:-20}"
+      ONLINE_MODE: "${ONLINE_MODE:-true}"
+      VIEW_DISTANCE: "${VIEW_DISTANCE:-10}"
+      LEVEL_NAME: "${LEVEL_NAME:-world}"
+      LEVEL_SEED: "${LEVEL_SEED:-}"
+      PVP: "${PVP:-true}"
+      JAVA_MEM_OPTS: "${JAVA_MEM_OPTS:--Xms512M -Xmx1024M}"
+    # Host port 8888 -> container port 25565 (the graded, internet-facing port).
+    ports:
+      - "8888:25565"
+    # Named volume persists the world and generated config across restarts.
+    volumes:
+      - mc-data:/data
+    # Restart the container automatically if it crashes / exits with an error.
+    restart: unless-stopped
+    # Keep an interactive console attached so you can send server commands.
+    stdin_open: true
+    tty: true
+
+volumes:
+  mc-data:
